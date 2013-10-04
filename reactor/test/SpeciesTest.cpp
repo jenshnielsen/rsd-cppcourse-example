@@ -21,6 +21,27 @@ TEST(SpeciesTest, SpeciesSetConcentration) { // First argument is test group, se
   EXPECT_EQ(1.0, mySpecies.GetConcentration()); // Assert that the name should be as expected
 }
 
+TEST(SpeciesTest, SpeciesDefaultRateOfChange) { // First argument is test group, second is test name
+  Species mySpecies("SomeName"); // Create a species with a specified name
+  EXPECT_EQ(0, mySpecies.GetRateOfChange()); // Assert that the name should be as expected
+}
+
+TEST(SpeciesTest, SpeciesAddToRateOfChange) { // First argument is test group, second is test name
+  Species mySpecies("SomeName"); // Create a species with a specified name
+  const double & my_change_of_rate = 1.0;
+  mySpecies.AddToRateOfChange(my_change_of_rate);
+  mySpecies.AddToRateOfChange(my_change_of_rate);
+  EXPECT_EQ(2.0, mySpecies.GetRateOfChange()); // Assert that the name should be as expected
+}
+
+TEST(SpeciesTest, SpeciesResetRateOfChange) { // First argument is test group, second is test name
+  Species mySpecies("SomeName"); // Create a species with a specified name
+  const double & my_change_of_rate = 1.0;
+  mySpecies.AddToRateOfChange(my_change_of_rate);
+  mySpecies.ResetRateOfChange();
+  EXPECT_EQ(0, mySpecies.GetRateOfChange()); // Assert that the name should be as expected
+}
+
 int main(int argc, char **argv) { // A main function scaffold to call the tests
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

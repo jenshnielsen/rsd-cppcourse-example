@@ -1,8 +1,7 @@
 #include "Species.h" // Include the declaration of the Species..
 
 reactor::Species::Species(const std::string &input_name):
-  name(input_name), // Initialise the name member variable from the input argument.
-  concentration(0)
+  name(input_name), concentration(0), rateofchange(0)
 {
   // do nothing
 }
