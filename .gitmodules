@@ -1,0 +1,6 @@
+[submodule "GreatCMakeCookOff"]
+	path = GreatCMakeCookOff
+	url = git@github.com:UCL/GreatCMakeCookOff.git
+[submodule "reactor/cmake_modules/GreatCMakeCookOff"]
+	path = reactor/cmake_modules/GreatCMakeCookOff
+	url = git@github.com:UCL/GreatCMakeCookOff.git

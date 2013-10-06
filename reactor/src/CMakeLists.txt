@@ -1,1 +1,1 @@
-add_library(reactor_library Species.cpp)
+add_library(reactor_library Species.cpp Reaction.cpp)

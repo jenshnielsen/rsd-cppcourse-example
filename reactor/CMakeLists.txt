@@ -7,11 +7,15 @@ add_executable(reactor reactor.cpp) # The executable to make is
 									 # called "reactor" and depends on the listed source files and libraries
 target_link_libraries(reactor reactor_library) # Add our library of reaction system code to the executable
 
+enable_language(CXX)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
+include(${CMAKE_MODULE_PATH}/GreatCMakeCookOff/AddCPP11Flags.cmake)
+
 # Boilerplate to enable the Google testing framework
 INCLUDE(ExternalProject)
 set(EXTERNAL_ROOT ${CMAKE_BINARY_DIR}/external)
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
+
 find_package(GTest)
 enable_testing()
-
 add_subdirectory(test)
+
