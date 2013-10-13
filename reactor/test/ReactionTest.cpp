@@ -56,7 +56,7 @@ TEST_F(ReactionTest, ReactionReactantIsPointer){
   auto myNewReactant = std::make_shared<Species>("NewReactant1");
   myReaction.AddSpeciesToReactants(myNewReactant);
   auto reactants = myReaction.GetReactants();
-  // get returns the basic pointer mem adress. 
+  // get returns the C pointer. 
   EXPECT_EQ(myNewReactant.get(),reactants[3].get());
 }
 

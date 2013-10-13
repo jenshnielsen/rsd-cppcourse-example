@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 include(${CMAKE_MODULE_PATH}/GreatCMakeCookOff/AddCPP11Flags.cmake)
 
 include(${CMAKE_MODULE_PATH}/GreatCMakeCookOff/CheckCXX11Features.cmake)
-cxx11_feature_check(REQUIRED auto rangebasedfor)
+cxx11_feature_check(REQUIRED auto rangebasedfor shared_ptr)
 
 include_directories(src) # This location "src" is added to the list of locations 
                          # which are searched when resolving #include statements in C/C++
