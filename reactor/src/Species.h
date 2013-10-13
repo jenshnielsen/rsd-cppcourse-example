@@ -19,7 +19,7 @@ namespace reactor
     void ResetRateOfChange(){rateofchange=0;};
 
   private:
-    std::string name; // A member variable for the class to store the name of the system.
+    std::string name; 
     double concentration;
     double rateofchange;
   };

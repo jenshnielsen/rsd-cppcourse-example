@@ -1,5 +1,7 @@
 #include <vector>
 #include <string>
+#include <memory>
+
 
 #include "Species.h" 
 
@@ -8,23 +10,27 @@
 
 namespace reactor
 {
+  typedef double RateConstant;
+  typedef double Flux;
 
   class Reaction 
   {   
   public:
-    Reaction(const double & input_rate);
-    const double & GetReactionRate() {return rate;};
+    Reaction(const RateConstant input_rate);
+    const RateConstant & GetReactionRate() const {return rate;};
     
-    const std::vector<Species> & GetReactants(){return reactants;};
-    const std::vector<Species> & GetProducts(){return products;};
+    const std::vector<std::shared_ptr<Species> > GetReactants() const {return reactants;};
+    const std::vector<std::shared_ptr<Species> > GetProducts() const {return products;};
     
-    void AddSpeciesToReactants(const Species & reactant){reactants.push_back(reactant);};
-    void AddSpeciesToProducts(const Species & product){products.push_back(product);};
+    void AddSpeciesToReactants(std::shared_ptr<Species> reactant){reactants.push_back(reactant);};
+    void AddSpeciesToProducts(std::shared_ptr<Species> product){products.push_back(product);};
+    
+    const Flux CalculateFlux ();
     
   private:
-    double rate;
-    std::vector<Species> reactants;
-    std::vector<Species> products;
+    RateConstant rate;
+    std::vector<std::shared_ptr<Species> > reactants;
+    std::vector<std::shared_ptr<Species> > products;
   };
 }
 
