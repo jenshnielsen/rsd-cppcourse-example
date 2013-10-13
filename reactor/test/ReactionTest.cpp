@@ -13,19 +13,23 @@ protected:
   ReactionTest():
     myReaction(5.0)
   {
-    Species myReactant1("Reactant1");
-    myReactant1.SetConcentration(1.0);
-    Species myReactant2("Reactant2");
-    myReactant2.SetConcentration(2.0);
-    Species myReactant3("Reactant3");
-    myReactant3.SetConcentration(3.0);
-    Species myProduct1("Product1");
-    Species myProduct2("Product2");
-    myReaction.AddSpeciesToReactants(std::make_shared<Species>(myReactant1));
-    myReaction.AddSpeciesToReactants(std::make_shared<Species>(myReactant2));
-    myReaction.AddSpeciesToReactants(std::make_shared<Species>(myReactant3));
-    myReaction.AddSpeciesToProducts(std::make_shared<Species>(myProduct1));
-    myReaction.AddSpeciesToProducts(std::make_shared<Species>(myProduct2));
+    auto myReactant1 = std::make_shared<Species>("Reactant1");
+    myReactant1->SetConcentration(1.0);
+    auto myReactant2 = std::make_shared<Species>("Reactant2");
+    myReactant2->SetConcentration(2.0);
+    auto myReactant3 = std::make_shared<Species>("Reactant3");
+    myReactant3->SetConcentration(3.0);
+    
+    auto myProduct1 = std::make_shared<Species>("Product1");
+    myProduct1->SetConcentration(5.0);
+    auto myProduct2 = std::make_shared<Species>("Product2");
+    myProduct2->SetConcentration(6.0);
+    
+    myReaction.AddSpeciesToReactants(myReactant1);
+    myReaction.AddSpeciesToReactants(myReactant2);
+    myReaction.AddSpeciesToReactants(myReactant3);
+    myReaction.AddSpeciesToProducts(myProduct1);
+    myReaction.AddSpeciesToProducts(myProduct2);
   };
 };
 
@@ -49,13 +53,12 @@ TEST_F(ReactionTest, ReactionReactantNames){
 }
 
 TEST_F(ReactionTest, ReactionReactantIsPointer){
-  Species myNewReactant("NewReactant1");
-  auto myNewReactantPtr = std::make_shared<Species>(myNewReactant);
-  myReaction.AddSpeciesToReactants(myNewReactantPtr);
+  auto myNewReactant = std::make_shared<Species>("NewReactant1");
+  myReaction.AddSpeciesToReactants(myNewReactant);
   auto reactants = myReaction.GetReactants();
-  EXPECT_EQ(myNewReactantPtr.get(),reactants[3].get());
+  // get returns the basic pointer mem adress. 
+  EXPECT_EQ(myNewReactant.get(),reactants[3].get());
 }
-
 
 TEST_F(ReactionTest, ReactionProductNames){
   auto products = myReaction.GetProducts();
@@ -65,7 +68,7 @@ TEST_F(ReactionTest, ReactionProductNames){
 
 TEST_F(ReactionTest, ReactionFlux){
   auto flux = myReaction.CalculateFlux();
-  EXPECT_EQ(flux,30.0);
+  EXPECT_EQ(30.0,flux);
 }
 
 int main(int argc, char **argv) { 
