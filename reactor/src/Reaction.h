@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 #include <memory>
-
+#include <iostream>
 
 #include "Species.h" 
 
@@ -23,15 +23,20 @@ namespace reactor
     const std::vector<std::shared_ptr<Species> > GetProducts() const {return products;};
     
     void AddSpeciesToReactants(std::shared_ptr<Species> reactant){reactants.push_back(reactant);};
-    void AddSpeciesToProducts(std::shared_ptr<Species> product){products.push_back(product);};
+    void AddSpeciesToProducts(std::shared_ptr<Species> product){products.push_back(product);};    
+
+    void ContributeToRatesOfChange() const ;
+
+    const Flux GetFlux () const;
     
-    const Flux CalculateFlux ();
-    
+
   private:
     RateConstant rate;
     std::vector<std::shared_ptr<Species> > reactants;
     std::vector<std::shared_ptr<Species> > products;
   };
+
+  std::ostream& operator<<(std::ostream &s, const reactor::Reaction& reaction);
 }
 
 #endif 

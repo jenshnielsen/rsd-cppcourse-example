@@ -67,8 +67,27 @@ TEST_F(ReactionTest, ReactionProductNames){
 }
 
 TEST_F(ReactionTest, ReactionFlux){
-  auto flux = myReaction.CalculateFlux();
+  auto flux = myReaction.GetFlux();
   EXPECT_EQ(30.0,flux);
+}
+
+ 
+TEST_F(ReactionTest, ReactionCanContributeToRatesOfChange) {
+  myReaction.ContributeToRatesOfChange();
+  auto reactants = myReaction.GetReactants();
+  auto products = myReaction.GetProducts();
+  EXPECT_EQ(-1.0*2.0*3.0*5.0, reactants[0]->GetRateOfChange());
+  EXPECT_EQ(-1.0*2.0*3.0*5.0, reactants[1]->GetRateOfChange());
+  EXPECT_EQ(-1.0*2.0*3.0*5.0, reactants[2]->GetRateOfChange());
+  EXPECT_EQ(2.0*3.0*5.0, products[0]->GetRateOfChange());
+  EXPECT_EQ(2.0*3.0*5.0, products[1]->GetRateOfChange());
+}
+ 
+TEST_F(ReactionTest, ReactionCanOutputToAStream) {
+  std::ostringstream output_buffer;
+  output_buffer << myReaction;
+
+  EXPECT_EQ("Reactant1 + Reactant2 + Reactant3 > 5 > Product1 + Product2", output_buffer.str());
 }
 
 int main(int argc, char **argv) { 
