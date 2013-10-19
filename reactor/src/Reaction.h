@@ -19,11 +19,14 @@ namespace reactor
     Reaction(const RateConstant input_rate);
     const RateConstant & GetReactionRate() const {return rate;};
     
-    const std::vector<std::shared_ptr<Species> > GetReactants() const {return reactants;};
-    const std::vector<std::shared_ptr<Species> > GetProducts() const {return products;};
+    const std::vector<Species* > GetReactants() const {return reactants;};
+    const std::vector<Species* > GetProducts() const {return products;};
     
-    void AddSpeciesToReactants(std::shared_ptr<Species> reactant){reactants.push_back(reactant);};
-    void AddSpeciesToProducts(std::shared_ptr<Species> product){products.push_back(product);};    
+    void AddSpeciesToReactants(Species *reactant){reactants.push_back(reactant);};
+    void AddSpeciesToProducts(Species *product){products.push_back(product);};
+
+    void AddSpeciesToReactants(Species &reactant){reactants.push_back(&reactant);};
+    void AddSpeciesToProducts(Species &product){products.push_back(&product);};
 
     void ContributeToRatesOfChange() const ;
 
@@ -32,8 +35,8 @@ namespace reactor
 
   private:
     RateConstant rate;
-    std::vector<std::shared_ptr<Species> > reactants;
-    std::vector<std::shared_ptr<Species> > products;
+    std::vector<Species*> reactants;
+    std::vector<Species*> products;
   };
 
   std::ostream& operator<<(std::ostream &s, const reactor::Reaction& reaction);

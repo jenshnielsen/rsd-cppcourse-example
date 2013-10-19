@@ -1,7 +1,7 @@
 #include "Reaction.h"
 
 reactor::Reaction::Reaction(const RateConstant input_rate):
-  rate(input_rate)
+  rate(input_rate), reactants(), products()
 {
 
 }

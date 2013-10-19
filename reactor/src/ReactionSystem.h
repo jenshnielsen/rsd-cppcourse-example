@@ -17,15 +17,15 @@ namespace reactor
   public:
     ReactionSystem();
     
-    void AddSpecies(std::shared_ptr<Species> newspecies);
-    const std::vector<std::shared_ptr<Species> > & GetSpecies() const { return species;} 
+    void AddSpecies(Species & newspecies);
+    const std::vector<Species* > & GetSpecies() const { return species;}
 
-    void AddReaction(std::shared_ptr<Reaction> newreaction);
-    const std::vector<std::shared_ptr<Reaction> > & GetReactions() const { return reactions;} 
+    void AddReaction(Reaction & newreaction);
+    const std::vector<Reaction* > & GetReactions() const { return reactions;}
 
   private:
-    std::vector<std::shared_ptr<Species> > species;
-    std::vector<std::shared_ptr<Reaction> > reactions;
+    std::vector<Species* > species;
+    std::vector<Reaction* > reactions;
   };
 
 }

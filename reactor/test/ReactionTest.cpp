@@ -9,20 +9,24 @@ using namespace reactor;
 class ReactionTest: public ::testing::Test {
 protected:
   Reaction myReaction;
+  Species myReactant1;
+  Species myReactant2;
+  Species myReactant3;
+  Species myProduct1;
+  Species myProduct2;
   ReactionTest():
-    myReaction(5.0)
+    myReaction(5.0),
+    myReactant1("Reactant1"),
+    myReactant2("Reactant2"),
+    myReactant3("Reactant3"),
+    myProduct1("Product1"),
+    myProduct2("Product2")
   {
-    auto myReactant1 = std::make_shared<Species>("Reactant1");
-    myReactant1->SetConcentration(1.0);
-    auto myReactant2 = std::make_shared<Species>("Reactant2");
-    myReactant2->SetConcentration(2.0);
-    auto myReactant3 = std::make_shared<Species>("Reactant3");
-    myReactant3->SetConcentration(3.0);
-    
-    auto myProduct1 = std::make_shared<Species>("Product1");
-    myProduct1->SetConcentration(5.0);
-    auto myProduct2 = std::make_shared<Species>("Product2");
-    myProduct2->SetConcentration(6.0);
+    myReactant1.SetConcentration(1.0);
+    myReactant2.SetConcentration(2.0);
+    myReactant3.SetConcentration(3.0);
+    myProduct1.SetConcentration(5.0);
+    myProduct2.SetConcentration(6.0);
     
     myReaction.AddSpeciesToReactants(myReactant1);
     myReaction.AddSpeciesToReactants(myReactant2);
@@ -45,18 +49,17 @@ TEST_F(ReactionTest, ReactionRigthNumberOfProducts){
 }
 
 TEST_F(ReactionTest, ReactionReactantNames){
-  auto reactants = myReaction.GetReactants();
+  std::vector<Species*> reactants = myReaction.GetReactants();
   EXPECT_EQ("Reactant1",reactants[0]->GetName());
   EXPECT_EQ("Reactant2",reactants[1]->GetName());
   EXPECT_EQ("Reactant3",reactants[2]->GetName());
 }
 
 TEST_F(ReactionTest, ReactionReactantIsPointer){
-  auto myNewReactant = std::make_shared<Species>("NewReactant1");
+  auto myNewReactant = Species("NewReactant1");
   myReaction.AddSpeciesToReactants(myNewReactant);
   auto reactants = myReaction.GetReactants();
-  // get returns the C pointer. 
-  EXPECT_EQ(myNewReactant.get(),reactants[3].get());
+  EXPECT_EQ(&myNewReactant,reactants[3]);
 }
 
 TEST_F(ReactionTest, ReactionProductNames){
