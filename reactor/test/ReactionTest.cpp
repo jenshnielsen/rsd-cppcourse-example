@@ -1,7 +1,6 @@
 #include <memory>
 
 #include "Reaction.h" // Include the code that we are testing
-#include "Species.h"
 
 #include <gtest/gtest.h>
 
