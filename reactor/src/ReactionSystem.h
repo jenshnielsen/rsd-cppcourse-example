@@ -15,7 +15,9 @@ namespace reactor
   class ReactionSystem
   {   
   public:
-    ReactionSystem();
+    ReactionSystem(){};
+
+    ~ReactionSystem(){};
     
     std::shared_ptr<Species> AddSpecies(const std::string &input_name);
     const std::vector<std::shared_ptr<Species> > & GetSpecies() const { return species;}
