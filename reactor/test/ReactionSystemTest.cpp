@@ -15,6 +15,8 @@ protected:
   std::shared_ptr<Species> myProduct1 = std::make_shared<Species>("myProduct1");
   std::shared_ptr<Species> myProduct2 = std::make_shared<Species>("myProduct2");
   std::shared_ptr<Reaction> myReaction = std::make_shared<Reaction>(5.0);
+  std::shared_ptr<Reaction> myReverseReaction = std::make_shared<Reaction>(2.0);
+
 
   ReactionSystemTest():
     myReactionSystem()
@@ -29,6 +31,12 @@ protected:
     myReaction->AddSpeciesToReactants(myReactant3);
     myReaction->AddSpeciesToProducts(myProduct1);
     myReaction->AddSpeciesToProducts(myProduct2);
+    myReverseReaction->AddSpeciesToProducts(myReactant1);
+    myReverseReaction->AddSpeciesToProducts(myReactant2);
+    myReverseReaction->AddSpeciesToProducts(myReactant3);
+    myReverseReaction->AddSpeciesToReactants(myProduct1);
+    myReverseReaction->AddSpeciesToReactants(myProduct2);
+
   };
 };
 
@@ -52,7 +60,14 @@ TEST_F(ReactionSystemTest, ReactionSystemCanAddReaction){
   myReactionSystem.AddReaction(myReaction);
   ASSERT_EQ(1,myReactionSystem.GetReactions().size());
   EXPECT_EQ(myReaction,myReactionSystem.GetReactions()[0]);
+}
 
+
+TEST_F(ReactionSystemTest, ReactionSystemCanAddMultipleReactions){
+  myReactionSystem.AddReaction(myReaction);
+  myReactionSystem.AddReaction(myReverseReaction);
+  ASSERT_EQ(2,myReactionSystem.GetReactions().size());
+  EXPECT_EQ(myReverseReaction,myReactionSystem.GetReactions()[1]);
 }
 
 int main(int argc, char **argv) { 
