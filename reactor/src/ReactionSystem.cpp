@@ -12,6 +12,8 @@ std::shared_ptr<reactor::Species> reactor::ReactionSystem::AddSpecies(const std:
 	return newspecies;
 }
 
-void reactor::ReactionSystem::AddReaction(Reaction& newreaction){
-	reactions.push_back(&newreaction);
+std::shared_ptr<reactor::Reaction> reactor::ReactionSystem::AddReaction(const double rate){
+	std::shared_ptr<reactor::Reaction> newreaction = std::make_shared<reactor::Reaction>(rate);
+	reactions.push_back(newreaction);
+	return newreaction;
 }

@@ -9,67 +9,66 @@ using namespace reactor;
 class ReactionSystemTest: public ::testing::Test {
 protected:
   ReactionSystem myReactionSystem;
-  Species myReactant1 = Species("myReactant1");
-  Species myReactant2 = Species("myReactant2");
-  Species myReactant3 = Species("myReactant3");
-  Species myProduct1 = Species("myProduct1");
-  Species myProduct2 = Species("myProduct2");
-  Reaction myReaction = Reaction(5.0);
-  Reaction myReverseReaction = Reaction(2.0);
-
 
   ReactionSystemTest():
     myReactionSystem()
   {
-    myReactant1.SetConcentration(1.0);
-    myReactant2.SetConcentration(2.0);
-    myReactant3.SetConcentration(3.0);
-    myProduct1.SetConcentration(5.0);
-    myProduct2.SetConcentration(6.0);
-    myReaction.AddSpeciesToReactants(myReactant1);
-    myReaction.AddSpeciesToReactants(myReactant2);
-    myReaction.AddSpeciesToReactants(myReactant3);
-    myReaction.AddSpeciesToProducts(myProduct1);
-    myReaction.AddSpeciesToProducts(myProduct2);
-    myReverseReaction.AddSpeciesToProducts(myReactant1);
-    myReverseReaction.AddSpeciesToProducts(myReactant2);
-    myReverseReaction.AddSpeciesToProducts(myReactant3);
-    myReverseReaction.AddSpeciesToReactants(myProduct1);
-    myReverseReaction.AddSpeciesToReactants(myProduct2);
+    auto myReaction = myReactionSystem.AddReaction(5.0);
+    auto myReverseReaction = myReactionSystem.AddReaction(2.0);
+    auto myReactant1 = myReactionSystem.AddSpecies("myReactant1");
+    auto myReactant2 = myReactionSystem.AddSpecies("myReactant2");
+    auto myReactant3 = myReactionSystem.AddSpecies("myReactant3");
+    auto myProduct1 = myReactionSystem.AddSpecies("myProduct1");
+    auto myProduct2 = myReactionSystem.AddSpecies("myProduct2");
+    myReactant1->SetConcentration(1.0);
+    myReactant2->SetConcentration(2.0);
+    myReactant3->SetConcentration(3.0);
+    myProduct1->SetConcentration(5.0);
+    myProduct2->SetConcentration(6.0);
+
+    myReaction->AddSpeciesToReactants(myReactant1.get());
+    myReaction->AddSpeciesToReactants(myReactant2.get());
+    myReaction->AddSpeciesToReactants(myReactant3.get());
+    myReaction->AddSpeciesToProducts(myProduct1.get());
+    myReaction->AddSpeciesToProducts(myProduct2.get());
+
+    
+    myReverseReaction->AddSpeciesToProducts(myReactant1.get());
+    myReverseReaction->AddSpeciesToProducts(myReactant2.get());
+    myReverseReaction->AddSpeciesToProducts(myReactant3.get());
+    myReverseReaction->AddSpeciesToReactants(myProduct1.get());
+    myReverseReaction->AddSpeciesToReactants(myProduct2.get());
 
   };
 };
 
 TEST_F(ReactionSystemTest, ReactionSystemCanAddSpecies){
-  myReactionSystem.AddSpecies("myReactant1");
-  myReactionSystem.AddSpecies("myReactant2");
-  ASSERT_EQ(2,myReactionSystem.GetSpecies().size());
-  //EXPECT_EQ(&myReactant1,myReactionSystem.GetSpecies()[0]);
-  //EXPECT_EQ(&myReactant2,myReactionSystem.GetSpecies()[1]);
-
+  auto myTestSpecies = myReactionSystem.AddSpecies("myTestSpecies");
+  ASSERT_EQ(6,myReactionSystem.GetSpecies().size());
+  EXPECT_EQ(myTestSpecies,myReactionSystem.GetSpecies()[5]);
 }
 
 TEST_F(ReactionSystemTest, ReactionSystemSpeciesCanBeModifiedByPointer){
-  auto myNewReactant1 = myReactionSystem.AddSpecies("myReactant1");
+  auto myNewReactant1 = myReactionSystem.AddSpecies("myNewReactant1");
   myNewReactant1->SetConcentration(1.0);
-  EXPECT_EQ(1.0,myReactionSystem.GetSpecies()[0]->GetConcentration());
+  EXPECT_EQ(1.0,myReactionSystem.GetSpecies()[5]->GetConcentration());
   myNewReactant1->SetConcentration(11.0);
-  EXPECT_EQ(11.0,myReactionSystem.GetSpecies()[0]->GetConcentration()); 
+  EXPECT_EQ(11.0,myReactionSystem.GetSpecies()[5]->GetConcentration()); 
 }
 
 TEST_F(ReactionSystemTest, ReactionSystemCanAddReaction){
-  myReactionSystem.AddReaction(myReaction);
-  ASSERT_EQ(1,myReactionSystem.GetReactions().size());
-  EXPECT_EQ(&myReaction,myReactionSystem.GetReactions()[0]);
+  auto myReaction = myReactionSystem.AddReaction(7.0);
+  ASSERT_EQ(3,myReactionSystem.GetReactions().size());
+  EXPECT_EQ(myReaction,myReactionSystem.GetReactions()[2]);
 }
 
 
 TEST_F(ReactionSystemTest, ReactionSystemCanAddMultipleReactions){
-  myReactionSystem.AddReaction(myReaction);
-  myReactionSystem.AddReaction(myReverseReaction);
-  ASSERT_EQ(2,myReactionSystem.GetReactions().size());
-  EXPECT_EQ(&myReaction,myReactionSystem.GetReactions()[0]);
-  EXPECT_EQ(&myReverseReaction,myReactionSystem.GetReactions()[1]);
+  auto myReaction1 = myReactionSystem.AddReaction(2.3);
+  auto myReaction2 = myReactionSystem.AddReaction(5.3);
+  ASSERT_EQ(4,myReactionSystem.GetReactions().size());
+  EXPECT_EQ(myReaction1,myReactionSystem.GetReactions()[2]);
+  EXPECT_EQ(myReaction2,myReactionSystem.GetReactions()[3]);
 }
 
 int main(int argc, char **argv) { 

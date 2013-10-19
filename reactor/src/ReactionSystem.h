@@ -20,12 +20,12 @@ namespace reactor
     std::shared_ptr<Species> AddSpecies(const std::string &input_name);
     const std::vector<std::shared_ptr<Species> > & GetSpecies() const { return species;}
 
-    void AddReaction(Reaction & newreaction);
-    const std::vector<Reaction* > & GetReactions() const { return reactions;}
+    std::shared_ptr<Reaction> AddReaction(double rate);
+    const std::vector<std::shared_ptr<Reaction> > & GetReactions() const { return reactions;}
 
   private:
     std::vector<std::shared_ptr<Species> > species;
-    std::vector<Reaction* > reactions;
+    std::vector<std::shared_ptr<Reaction> > reactions;
   };
 
 }
