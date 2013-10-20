@@ -29,7 +29,9 @@ namespace reactor
 
     const std::vector<double> GetConcentrations();
     
-    void SetConcentrations(const std::vector<double>);
+    void SetConcentrations(const std::vector<double> &);
+
+    void GetRatesOfChangeGivenConcentrations(const std::vector<double>& concentrations, std::vector<double> & rates);
 
   private:
     std::vector<std::shared_ptr<Species> > species;

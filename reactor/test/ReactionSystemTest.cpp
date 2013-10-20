@@ -122,6 +122,20 @@ TEST_F(ReactionSystemTest, SettingConcentrationsChangesRates){
   
 }
 
+
+TEST_F(ReactionSystemTest, SetConcentrationsAndGetRatesOfChange){
+  std::vector<double> newconcentrations = {3.0,9.0,1.0,5.0,19.0};
+  std::vector<double> newrates;
+  myReactionSystem.GetRatesOfChangeGivenConcentrations(newconcentrations,newrates);
+  double newforwardrateofchange = -5.0*3.0*9.0*1.0+2.0*5.0*19.0;
+  double newreverserateofchange = -newforwardrateofchange;
+  std::vector<double> newexpectedrateofchange = {newforwardrateofchange,
+  newforwardrateofchange,newforwardrateofchange,newreverserateofchange,
+  newreverserateofchange};
+  EXPECT_EQ(newexpectedrateofchange,newrates);
+  
+}
+
 int main(int argc, char **argv) { 
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
