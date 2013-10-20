@@ -48,6 +48,7 @@ TEST_F(ReactionSystemTest, ReactionSystemCanAddSpecies){
   EXPECT_EQ(myTestSpecies,myReactionSystem.GetSpecies()[5]);
 }
 
+
 TEST_F(ReactionSystemTest, ReactionSystemSpeciesCanBeModifiedByPointer){
   auto myNewReactant1 = myReactionSystem.AddSpecies("myNewReactant1");
   myNewReactant1->SetConcentration(1.0);
@@ -86,6 +87,39 @@ TEST_F(ReactionSystemTest, GetConcentrations){
   auto concentrations = myReactionSystem.GetConcentrations();
   std::vector<double> expectedconcentrations = {1.0,2.0,3.0,5.0,6.0};
   EXPECT_EQ(expectedconcentrations,concentrations);
+}
+
+TEST_F(ReactionSystemTest, SetConcentrations){
+  auto concentrations = myReactionSystem.GetConcentrations();
+  std::vector<double> expectedconcentrations = {1.0,2.0,3.0,5.0,6.0};
+  EXPECT_EQ(expectedconcentrations,concentrations);
+  std::vector<double> newexpectedconcentrations = {7.0,4.0,3.0,9.0,11.0};
+  myReactionSystem.SetConcentrations(newexpectedconcentrations);
+  auto newconcentrations = myReactionSystem.GetConcentrations();
+  EXPECT_EQ(newexpectedconcentrations,newconcentrations);
+}
+
+
+TEST_F(ReactionSystemTest, SettingConcentrationsChangesRates){
+  auto rateofchange = myReactionSystem.GetRatesOfChange();
+  double forwardrateofchange = -5.0*1.0*2.0*3.0+2.0*5.0*6.0;
+  double reverserateofchange = -forwardrateofchange;
+  std::vector<double> expectedrateofchange = {forwardrateofchange,
+  forwardrateofchange,forwardrateofchange,reverserateofchange,
+  reverserateofchange};
+  EXPECT_EQ(expectedrateofchange,rateofchange);
+
+  std::vector<double> newexpectedconcentrations = {7.0,4.0,3.0,9.0,11.0};
+  myReactionSystem.SetConcentrations(newexpectedconcentrations);
+
+  auto newrateofchange = myReactionSystem.GetRatesOfChange();
+  double newforwardrateofchange = -5.0*7.0*4.0*3.0+2.0*9.0*11.0;
+  double newreverserateofchange = -newforwardrateofchange;
+  std::vector<double> newexpectedrateofchange = {newforwardrateofchange,
+  newforwardrateofchange,newforwardrateofchange,newreverserateofchange,
+  newreverserateofchange};
+  EXPECT_EQ(newexpectedrateofchange,newrateofchange);
+  
 }
 
 int main(int argc, char **argv) { 

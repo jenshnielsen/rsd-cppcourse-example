@@ -41,3 +41,11 @@ const std::vector<double> reactor::ReactionSystem::GetConcentrations(){
 
 	return concentrations;
 }
+
+void reactor::ReactionSystem::SetConcentrations(const std::vector<double> concentrations){
+	std::vector<double>::const_iterator each_concentration = concentrations.begin();
+	for (auto element : species){
+		element->SetConcentration(*each_concentration);
+		++each_concentration;
+	}
+}
