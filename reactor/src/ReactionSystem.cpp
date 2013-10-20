@@ -12,3 +12,22 @@ std::shared_ptr<reactor::Reaction> reactor::ReactionSystem::AddReaction(const do
 	reactions.push_back(newreaction);
 	return newreaction;
 }
+
+
+const std::vector<double> reactor::ReactionSystem::GetRateOfChange(){
+	std::vector<double> rateofchange;
+
+	for (auto element : species){
+		element->ResetRateOfChange();
+	}
+
+	for (auto element : reactions){
+		element->ContributeToRatesOfChange();
+	}
+
+	for (auto element : species){
+		rateofchange.push_back(element->GetRateOfChange());
+	}	
+
+return rateofchange;
+}

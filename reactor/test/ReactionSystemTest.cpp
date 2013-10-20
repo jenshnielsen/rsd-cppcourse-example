@@ -71,6 +71,16 @@ TEST_F(ReactionSystemTest, ReactionSystemCanAddMultipleReactions){
   EXPECT_EQ(myReaction2,myReactionSystem.GetReactions()[3]);
 }
 
+TEST_F(ReactionSystemTest, ReactionSystemGetRateOfChange){
+  auto rateofchange = myReactionSystem.GetRateOfChange();
+  EXPECT_EQ(-5.0*2.0*3.0*1.0+5.0*6.0*2.0,rateofchange[0]);
+  EXPECT_EQ(-5.0*2.0*3.0*1.0+5.0*6.0*2.0,rateofchange[1]);
+  EXPECT_EQ(-5.0*2.0*3.0*1.0+5.0*6.0*2.0,rateofchange[2]);
+  EXPECT_EQ(+5.0*2.0*3.0*1.0-5.0*6.0*2.0,rateofchange[3]);
+  EXPECT_EQ(+5.0*2.0*3.0*1.0-5.0*6.0*2.0,rateofchange[4]);
+}
+
+
 int main(int argc, char **argv) { 
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

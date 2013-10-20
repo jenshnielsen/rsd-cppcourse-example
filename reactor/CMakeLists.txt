@@ -8,6 +8,12 @@ include(${CMAKE_MODULE_PATH}/GreatCMakeCookOff/AddCPP11Flags.cmake)
 include(${CMAKE_MODULE_PATH}/GreatCMakeCookOff/CheckCXX11Features.cmake)
 cxx11_feature_check(REQUIRED auto rangebasedfor shared_ptr)
 
+set(Boost_ADDITIONAL_VERSIONS 1.53.0 1.54.0 1.53 1.54)
+find_package(Boost 1.53.0 )
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 include_directories(src) # This location "src" is added to the list of locations 
                          # which are searched when resolving #include statements in C/C++
 add_subdirectory(src) # Look in the CMakeLists.txt file for explanation on how to build our library code
