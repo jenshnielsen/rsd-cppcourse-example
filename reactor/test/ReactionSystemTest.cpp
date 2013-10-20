@@ -73,7 +73,7 @@ TEST_F(ReactionSystemTest, ReactionSystemCanAddMultipleReactions){
 
 TEST_F(ReactionSystemTest, ReactionSystemGetRatesOfChange){
   auto rateofchange = myReactionSystem.GetRatesOfChange();
-  double forwardrateofchange = -5.0*1.0*2.0*3.0+2*0*5.0*6.0;
+  double forwardrateofchange = -5.0*1.0*2.0*3.0+2.0*5.0*6.0;
   // -fluxforward*myReactant1*myReactant2*myReactant3+fluxreverse*myproduct1*myproduct2
   double reverserateofchange = -forwardrateofchange;
   std::vector<double> expectedrateofchange = {forwardrateofchange,
@@ -84,9 +84,6 @@ TEST_F(ReactionSystemTest, ReactionSystemGetRatesOfChange){
 
 TEST_F(ReactionSystemTest, GetConcentrations){
   auto concentrations = myReactionSystem.GetConcentrations();
-  double forwardrateofchange = -5.0*1.0*2.0*3.0+2*0*5.0*6.0;
-  // -fluxforward*myReactant1*myReactant2*myReactant3+fluxreverse*myproduct1*myproduct2
-  double reverserateofchange = -forwardrateofchange;
   std::vector<double> expectedconcentrations = {1.0,2.0,3.0,5.0,6.0};
   EXPECT_EQ(expectedconcentrations,concentrations);
 }
