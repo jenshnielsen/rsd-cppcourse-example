@@ -25,8 +25,10 @@ namespace reactor
     std::shared_ptr<Reaction> AddReaction(double rate);
     const std::vector<std::shared_ptr<Reaction> > & GetReactions() const { return reactions;}
 
-    const std::vector<double> GetRateOfChange();
+    const std::vector<double> GetRatesOfChange();
 
+    const std::vector<double> GetConcentrations();
+    
   private:
     std::vector<std::shared_ptr<Species> > species;
     std::vector<std::shared_ptr<Reaction> > reactions;

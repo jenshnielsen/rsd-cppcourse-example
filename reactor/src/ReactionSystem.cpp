@@ -14,7 +14,7 @@ std::shared_ptr<reactor::Reaction> reactor::ReactionSystem::AddReaction(const do
 }
 
 
-const std::vector<double> reactor::ReactionSystem::GetRateOfChange(){
+const std::vector<double> reactor::ReactionSystem::GetRatesOfChange(){
 	std::vector<double> rateofchange;
 
 	for (auto element : species){
@@ -27,7 +27,17 @@ const std::vector<double> reactor::ReactionSystem::GetRateOfChange(){
 
 	for (auto element : species){
 		rateofchange.push_back(element->GetRateOfChange());
+	}
+
+	return rateofchange;
+}
+
+const std::vector<double> reactor::ReactionSystem::GetConcentrations(){
+	std::vector<double> concentrations;
+
+	for (auto element : species){
+		concentrations.push_back(element->GetConcentration());
 	}	
 
-return rateofchange;
+	return concentrations;
 }

@@ -71,15 +71,25 @@ TEST_F(ReactionSystemTest, ReactionSystemCanAddMultipleReactions){
   EXPECT_EQ(myReaction2,myReactionSystem.GetReactions()[3]);
 }
 
-TEST_F(ReactionSystemTest, ReactionSystemGetRateOfChange){
-  auto rateofchange = myReactionSystem.GetRateOfChange();
-  EXPECT_EQ(-5.0*2.0*3.0*1.0+5.0*6.0*2.0,rateofchange[0]);
-  EXPECT_EQ(-5.0*2.0*3.0*1.0+5.0*6.0*2.0,rateofchange[1]);
-  EXPECT_EQ(-5.0*2.0*3.0*1.0+5.0*6.0*2.0,rateofchange[2]);
-  EXPECT_EQ(+5.0*2.0*3.0*1.0-5.0*6.0*2.0,rateofchange[3]);
-  EXPECT_EQ(+5.0*2.0*3.0*1.0-5.0*6.0*2.0,rateofchange[4]);
+TEST_F(ReactionSystemTest, ReactionSystemGetRatesOfChange){
+  auto rateofchange = myReactionSystem.GetRatesOfChange();
+  double forwardrateofchange = -5.0*1.0*2.0*3.0+2*0*5.0*6.0;
+  // -fluxforward*myReactant1*myReactant2*myReactant3+fluxreverse*myproduct1*myproduct2
+  double reverserateofchange = -forwardrateofchange;
+  std::vector<double> expectedrateofchange = {forwardrateofchange,
+  forwardrateofchange,forwardrateofchange,reverserateofchange,
+  reverserateofchange};
+  EXPECT_EQ(expectedrateofchange,rateofchange);
 }
 
+TEST_F(ReactionSystemTest, GetConcentrations){
+  auto concentrations = myReactionSystem.GetConcentrations();
+  double forwardrateofchange = -5.0*1.0*2.0*3.0+2*0*5.0*6.0;
+  // -fluxforward*myReactant1*myReactant2*myReactant3+fluxreverse*myproduct1*myproduct2
+  double reverserateofchange = -forwardrateofchange;
+  std::vector<double> expectedconcentrations = {1.0,2.0,3.0,5.0,6.0};
+  EXPECT_EQ(expectedconcentrations,concentrations);
+}
 
 int main(int argc, char **argv) { 
   ::testing::InitGoogleTest(&argc, argv);
