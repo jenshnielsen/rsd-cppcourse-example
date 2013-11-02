@@ -42,8 +42,8 @@ protected:
     auto decay = simple_decay_system.AddReaction(2.0);
     auto original = simple_decay_system.AddSpecies("Original");
     auto product = simple_decay_system.AddSpecies("Product");
-    decay->AddSpeciesToReactants(original.get());
-    decay->AddSpeciesToProducts(product.get());
+    decay->AddSpeciesToReactants(original);
+    decay->AddSpeciesToProducts(product);
     original->SetConcentration(100.0);
     product->SetConcentration(0.0); 
   };

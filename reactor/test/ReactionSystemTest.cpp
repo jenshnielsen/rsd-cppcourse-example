@@ -26,18 +26,18 @@ protected:
     myProduct1->SetConcentration(5.0);
     myProduct2->SetConcentration(6.0);
 
-    myReaction->AddSpeciesToReactants(myReactant1.get());
-    myReaction->AddSpeciesToReactants(myReactant2.get());
-    myReaction->AddSpeciesToReactants(myReactant3.get());
-    myReaction->AddSpeciesToProducts(myProduct1.get());
-    myReaction->AddSpeciesToProducts(myProduct2.get());
+    myReaction->AddSpeciesToReactants(myReactant1);
+    myReaction->AddSpeciesToReactants(myReactant2);
+    myReaction->AddSpeciesToReactants(myReactant3);
+    myReaction->AddSpeciesToProducts(myProduct1);
+    myReaction->AddSpeciesToProducts(myProduct2);
 
     
-    myReverseReaction->AddSpeciesToProducts(myReactant1.get());
-    myReverseReaction->AddSpeciesToProducts(myReactant2.get());
-    myReverseReaction->AddSpeciesToProducts(myReactant3.get());
-    myReverseReaction->AddSpeciesToReactants(myProduct1.get());
-    myReverseReaction->AddSpeciesToReactants(myProduct2.get());
+    myReverseReaction->AddSpeciesToProducts(myReactant1);
+    myReverseReaction->AddSpeciesToProducts(myReactant2);
+    myReverseReaction->AddSpeciesToProducts(myReactant3);
+    myReverseReaction->AddSpeciesToReactants(myProduct1);
+    myReverseReaction->AddSpeciesToReactants(myProduct2);
 
   };
 };

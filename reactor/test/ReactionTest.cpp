@@ -49,17 +49,17 @@ TEST_F(ReactionTest, ReactionRigthNumberOfProducts){
 }
 
 TEST_F(ReactionTest, ReactionReactantNames){
-  std::vector<Species*> reactants = myReaction.GetReactants();
+  auto reactants = myReaction.GetReactants();
   EXPECT_EQ("Reactant1",reactants[0]->GetName());
   EXPECT_EQ("Reactant2",reactants[1]->GetName());
   EXPECT_EQ("Reactant3",reactants[2]->GetName());
 }
 
 TEST_F(ReactionTest, ReactionReactantIsPointer){
-  auto myNewReactant = Species("NewReactant1");
+  auto myNewReactant = std::make_shared<Species>("NewReactant1");
   myReaction.AddSpeciesToReactants(myNewReactant);
   auto reactants = myReaction.GetReactants();
-  EXPECT_EQ(&myNewReactant,reactants[3]);
+  EXPECT_EQ(myNewReactant,reactants[3]);
 }
 
 TEST_F(ReactionTest, ReactionProductNames){
