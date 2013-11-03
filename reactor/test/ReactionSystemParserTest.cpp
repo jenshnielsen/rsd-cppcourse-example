@@ -1,5 +1,5 @@
-#include "ReactionSystemParser.h" // Include the code that we are testing
-#include <gtest/gtest.h> // Include the google test framework
+#include "ReactionSystemParser.h"
+#include <gtest/gtest.h>
 
 using namespace reactor;
 
@@ -35,7 +35,6 @@ TEST_F(ReactionSystemParserTest, ParserCanCreateSpecies) {
 }
 
 TEST_F(ReactionSystemParserTest, ParserCanCreateReactions) {
-  // Define your reaction system file format sensibly here
   std::shared_ptr<ReactionSystem> system = parser.FromStream(buffer);
   ASSERT_EQ(3,system->GetReactions().size());
   EXPECT_EQ(2.0,system->GetReactions()[0]->GetReactionRate());
@@ -44,8 +43,6 @@ TEST_F(ReactionSystemParserTest, ParserCanCreateReactions) {
 }
 
 TEST_F(ReactionSystemParserTest, ParserReactionsHaveAppropriateSpecies) {
-  // Define your reaction system file format sensibly here
-
   std::shared_ptr<ReactionSystem> system = parser.FromStream(buffer);
   
   ASSERT_EQ(3,system->GetReactions().size());
@@ -84,7 +81,6 @@ TEST_F(ReactionSystemParserTest, ParserCanFindExistingSpecies) {
 }
 
 TEST_F(ReactionSystemParserTest, ParseLine) {
-  // Define one reaction from your file format sensibly here
   std::string source("A + B > 2.0 > C + D");
   std::vector<std::string> reactant_names;
   std::vector<std::string> product_names;
@@ -101,7 +97,7 @@ TEST_F(ReactionSystemParserTest, ParseLine) {
   EXPECT_EQ(2.0,rate);
 }
 
-int main(int argc, char **argv) { // A main function scaffold to call the tests
+int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
