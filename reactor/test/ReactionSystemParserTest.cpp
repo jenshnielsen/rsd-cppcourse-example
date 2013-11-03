@@ -5,26 +5,25 @@ using namespace reactor;
 
 class ReactionSystemParserTest: public ::testing::Test {
 protected:
-	ReactionSystemParser parser;
-	ReactionSystemParserTest():
-		parser()
-	{
-	};
+  ReactionSystemParser parser;
+  std::istringstream buffer;
+  
+  ReactionSystemParserTest():
+    parser(),
+    buffer( "A + B > 2.0 > C + D\n"
+	     "C > 3.0 > E + F\n"
+	     "A > 5.0 > C\n")
+  {
+  };
 };
 
 TEST_F(ReactionSystemParserTest, ParserCanStart) {
-  std::istringstream buffer("");
-  std::shared_ptr<ReactionSystem> system = parser.FromStream(buffer);	
+  std::istringstream mybuffer("");
+  std::shared_ptr<ReactionSystem> system = parser.FromStream(mybuffer);	
   EXPECT_EQ(0,system->GetSpecies().size());
 }
 
 TEST_F(ReactionSystemParserTest, ParserCanCreateSpecies) {
-  // Define your reaction system file format sensibly here
-  std::istringstream buffer(
-			    "A + B > 2.0 > C + D\n"
-			    "C > 3.0 > E + F\n"
-			    "A > 5.0 > C\n"		
-			    );
   std::shared_ptr<ReactionSystem> system = parser.FromStream(buffer);
   ASSERT_EQ(6,system->GetSpecies().size());
   EXPECT_EQ("A",system->GetSpecies()[0]->GetName());
@@ -37,11 +36,6 @@ TEST_F(ReactionSystemParserTest, ParserCanCreateSpecies) {
 
 TEST_F(ReactionSystemParserTest, ParserCanCreateReactions) {
   // Define your reaction system file format sensibly here
-  std::istringstream buffer(
-			    "A + B > 2.0 > C + D\n"
-			    "C > 3.0 > E + F\n"
-			    "A > 5.0 > C\n"		
-			    );
   std::shared_ptr<ReactionSystem> system = parser.FromStream(buffer);
   ASSERT_EQ(3,system->GetReactions().size());
   EXPECT_EQ(2.0,system->GetReactions()[0]->GetReactionRate());
@@ -51,11 +45,7 @@ TEST_F(ReactionSystemParserTest, ParserCanCreateReactions) {
 
 TEST_F(ReactionSystemParserTest, ParserReactionsHaveAppropriateSpecies) {
   // Define your reaction system file format sensibly here
-  std::istringstream buffer(
-			    "A + B > 2.0 > C + D\n"
-			    "C > 3.0 > E + F\n"
-			    "A > 5.0 > C\n"		
-			    );
+
   std::shared_ptr<ReactionSystem> system = parser.FromStream(buffer);
   
   ASSERT_EQ(3,system->GetReactions().size());
