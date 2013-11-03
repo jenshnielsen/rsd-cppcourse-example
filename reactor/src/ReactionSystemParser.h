@@ -1,6 +1,6 @@
 #include <string> // use the string capabilities from the standard library
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <exception>
 #include <iostream>
 #include <memory>
@@ -26,7 +26,7 @@ namespace reactor {
 						const std::string &name);
     
   private:
-    std::map<std::string, std::shared_ptr<Species> > species_map;
+    std::unordered_map<std::string, std::shared_ptr<Species> > species_map;
     void ParseSpeciesList(std::string & source, std::vector<std::string> &species_names);
   };
 }
