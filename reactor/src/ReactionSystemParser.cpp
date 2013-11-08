@@ -63,8 +63,7 @@ void reactor::ReactionSystemParser::ParseSpeciesList(std::string & source,
 {
   boost::split(species_names,source,boost::is_any_of("+"));
   //for (auto i : species_names){
-  for( std::vector<std::string>::iterator species=species_names.begin(); 
-       species!=species_names.end(); species++){
-    boost::trim(*species);
+  for( auto & species : species_names){
+    boost::trim(species);
   }
 }
